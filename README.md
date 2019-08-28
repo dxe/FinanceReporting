@@ -5,7 +5,7 @@ A Flask app that provides reporting to the DxE Finance team. Live at http://fina
 ## Requirements
 Python 3.6 or later
 
-## Local installation
+## Local development
 1. Clone this repo.
 2. Create a virtual enviornment: ```python3 -m venv venv```
 3. Activate that environment: ```. venv/bin/activate```
@@ -20,7 +20,7 @@ Python 3.6 or later
   * ```DB_PASSWORD``` database password
 6. Run the app: ```flask run```
 
-## Deploying changes to production
+## Deploying changes
 1. SSH into ec2.dxe.io
 2. ```cd /var/www/FinanceReporting/FinanceReporting```
 3. ```git pull```
