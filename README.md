@@ -1,6 +1,6 @@
 # finance-reporting
 
-A Flask app that provides reporting to the DxE Finance team. Live at [finance-reporting.dxe.io].
+A Flask app that provides reporting to the DxE Finance team. Live at http://finance-reporting.dxe.io.
 
 ## How to install
 1. Clone this repo.
