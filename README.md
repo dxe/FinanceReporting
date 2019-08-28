@@ -3,7 +3,7 @@
 A Flask app that provides reporting to the DxE Finance team. Live at http://finance-reporting.dxe.io.
 
 ## Requirements
-Python 3.6+
+Python 3.6 or later
 
 ## Installation
 1. Clone this repo.
