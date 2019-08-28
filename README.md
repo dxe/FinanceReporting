@@ -5,7 +5,7 @@ A Flask app that provides reporting to the DxE Finance team. Live at http://fina
 ## Requirements
 Python 3.6 or later
 
-## Installation
+## Local installation
 1. Clone this repo.
 2. Create a virtual enviornment: ```python3 -m venv venv```
 3. Activate that environment: ```. venv/bin/activate```
