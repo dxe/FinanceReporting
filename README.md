@@ -10,7 +10,7 @@ Python 3.6 or later
 2. Create a virtual enviornment: ```python3 -m venv venv```
 3. Activate that environment: ```. venv/bin/activate```
 4. Install requirements: ```pip install -r requirements.txt```
-5. Rename ```.env-temp``` to ```.env``` and fill in your secrets.
+5. Copy ```.env-temp``` to ```.env``` and fill in your secrets.
   * ```GOOGLE_OAUTH_CLIENT_ID```
   * ```GOOGLE_OAUTH_CLIENT_SECRET```
   * ```FLASK_SECRET_ID``` a long random string of your choice
