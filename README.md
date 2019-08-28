@@ -12,13 +12,13 @@ A Flask app that provides reporting to the DxE Finance team. Live at http://fina
 3. Activate that environment: ```. venv/bin/activate```
 4. Install requirements: ```pip install -r requirements.txt```
 5. Copy ```.env-temp``` to ```.env``` and fill in your secrets.
-  * ```GOOGLE_OAUTH_CLIENT_ID``` see https://console.developers.google.com/apis/credentials
-  * ```GOOGLE_OAUTH_CLIENT_SECRET```
-  * ```FLASK_SECRET_ID``` a long random string of your choice
-  * ```DB_IP``` database IP to connect to
-  * ```DB``` database name to connect to
-  * ```DB_USER``` database username
-  * ```DB_PASSWORD``` database password
+    - ```GOOGLE_OAUTH_CLIENT_ID``` see https://console.developers.google.com/apis/credentials
+    - ```GOOGLE_OAUTH_CLIENT_SECRET```
+    - ```FLASK_SECRET_ID``` a long random string of your choice
+    - ```DB_IP``` database IP to connect to
+    - ```DB``` database name to connect to
+    - ```DB_USER``` database username
+    - ```DB_PASSWORD``` database password
 6. Run the app: ```flask run```
 
 ## Deploying changes
