@@ -1,4 +1,4 @@
-# finance-reporting
+# FinanceReporting
 
 A Flask app that provides reporting to the DxE Finance team. Live at http://finance-reporting.dxe.io.
 
