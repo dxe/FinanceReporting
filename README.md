@@ -19,3 +19,8 @@ Python 3.6 or later
   * ```DB_USER``` database username
   * ```DB_PASSWORD``` database password
 6. Run the app: ```flask run```
+
+## Deploying changes to production
+1. SSH into ec2.dxe.io
+2. ```cd /var/www/FinanceReporting/FinanceReporting```
+3. ```git pull```
