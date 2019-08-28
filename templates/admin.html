@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% set active_page = "admin" %}
+{% set heading1 = "Users" %}
+
+{% block content %}
+
+	<h1>{{ heading1 }}</h1>
+
+	<br />
+
+	<form action="/admin" method="post">
+	  <h4>New user:</h4>
+	  <div class="form-row">
+	    <div class="col">
+	      <input name="name" type="text" class="form-control" placeholder="First & last name">
+	    </div>
+	    <div class="col">
+	      <input name="email" type="text" class="form-control" placeholder="Email">
+	    </div>
+	    <div class="col">
+	    	<button type="submit" class="btn btn-primary">Submit</button>
+	    </div>
+	  </div>
+	</form>
+
+	<br /><br />
+
+	<table class="table compact hover row-border stripe" id="admin-table">
+
+		<thead>
+
+			<tr>
+
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Last Login</th>
+
+			</tr>
+		</thead>
+
+		<tbody>
+
+			{% for row in rows %}
+
+				<tr>
+
+					<td>{{ row.id }}</a></td>
+					<td>{{ row.name }}</a></td>
+					<td>{{ row.email }}</td>
+					<td>{{ row.last_auth }}</td>
+
+		  		</tr>
+
+			{% endfor %}
+
+		</tbody>
+
+	</table>
+
+{% endblock %}

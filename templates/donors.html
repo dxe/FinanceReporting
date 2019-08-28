@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% set active_page = "donors" %}
+
+{% block content %}
+
+	<h1>{{ heading1 }}</h1>
+
+	<table class="table compact hover row-border stripe" id="donors-table">
+
+		<thead>
+
+			<tr>
+
+				<th width="20%">Name</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>Type</th>
+				<th>Recurring Status</th>
+				<th>Last Date</th>
+				<th>First Date</th>
+				<th>Total Amount</th>
+
+			</tr>
+		</thead>
+
+		<tbody>
+
+			{% for row in rows %}
+
+				<tr>
+
+					<td><a href="/donations?n={{ row.name | urlencode }}" target="_blank">{{ row.name }}</a></td>
+					<td>{{ row.email }}</td>
+					<td>{{ row.phone }}</td>
+					<td>{{ row.type }}</td>
+					<td>{{ row.status }}</td>
+					<td class="nowrap">{{ row.lastDate | formatdate }}</td>
+					<td class="nowrap">{{ row.firstDate | formatdate }}</td>
+					<td>{{ row.amount | usd }}</td>
+		  		</tr>
+
+			{% endfor %}
+
+		</tbody>
+
+	</table>
+
+{% endblock %}

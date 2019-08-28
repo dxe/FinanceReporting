@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% set active_page = "donations" %}
+{% set heading1 = "Donation search" %}
+
+{% block content %}
+
+    <h1>Donation search</h1>
+
+    <br />
+
+    <form action="/donations" method="post">
+            
+        <div class="form-group">
+            <label>Donor name</label>
+            <input autofocus class="form-control" name="donorName" type="text">
+        </div>
+
+        <div class="row form-group">
+
+            <div class="col">
+
+                <label>Minimum Date</label>
+                <input class="form-control" name="minDate" type="date">
+
+            </div>
+
+            <div class="col">
+
+                <label>Maximum Date</label>
+                <input class="form-control" name="maxDate" type="date">
+
+            </div>
+
+        </div>
+
+        <div class="row form-group">
+
+            <div class="col">
+
+                <label>Minimum Amount</label>
+                <input class="form-control" name="minAmount" type="number">
+
+            </div>
+
+            <div class="col">
+
+                <label>Maximum Amount</label>
+                <input class="form-control" name="maxAmount" type="number">
+
+            </div>
+
+        </div>
+
+        <!---
+        <div class="form-group">
+            <label>Donor email</label>
+            <input class="form-control" name="donorEmail" type="text">
+        </div>
+        --->
+
+        <div class="form-group">
+            <label>Status</label>
+            <select class="form-control" name="status">
+                <option value="Complete">Complete</option>
+                <option value="Failed">Failed</option>
+                <option value="Refunded">Refunded</option>
+                <option value="Pending">Pending</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Type</label>
+            <select class="form-control" name="donationType">
+                <option value="" selected>All</option>
+                <option value="One Time">One Time</option>
+                <option value="Recurring">Recurring</option>
+                <option value="Offline">Offline</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Donation form</label>
+            <select class="form-control" name="donationForm">
+                <option value="" selected>All</option>
+                <!--- dynamic list of forms --->
+                {% for form in donationForms %}
+                    <option value="{{ form.formName }}">{{ form.formName }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+           
+    </form>
+
+{% endblock %}
