@@ -5,7 +5,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from flask_dance.contrib.google import make_google_blueprint, google
 
-from helpers import sanitize, login_required, usd, urlencode_filter, format_date
+from .helpers import sanitize, login_required, usd, urlencode_filter, format_date
 
 # configure app
 app = Flask(__name__)
@@ -103,7 +103,16 @@ def login():
 
 @app.route('/logout')
 def logout():
+
+    if google.authorized:
+        google.post(
+            'https://accounts.google.com/o/oauth2/revoke',
+            params={'token': app.blueprints['google'].token["access_token"]},
+            headers = {'content-type': 'application/x-www-form-urlencoded'}
+        )
+
     session.clear()
+
     return redirect("/")
 
 
