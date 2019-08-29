@@ -76,11 +76,15 @@ def login():
     if not google.authorized:
         # send to oauth
         return redirect(url_for("google.login"))
-    # get user info
-    resp = google.get("/oauth2/v1/userinfo")
-    # make sure resp.ok exists, else show resp.text as error
-    assert resp.ok, resp.text
+    # get user info, or sent back to login if token expired
+    try:
+        resp = google.get("/oauth2/v1/userinfo")
+        # make sure resp.ok exists, else show resp.text as error
+        assert resp.ok, resp.text
+    except (InvalidGrantError, TokenExpiredError) as e: 
+        return redirect(url_for("google.login"))
 
+    # email address provided by google oauth
     email = resp.json()["email"]
 
     # check if email is authorized
