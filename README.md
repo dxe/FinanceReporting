@@ -25,4 +25,4 @@ A Flask app that provides reporting to the DxE Finance team. Live at http://fina
 1. SSH into ec2.dxe.io
 2. ```cd /var/www/FinanceReporting/FinanceReporting```
 3. ```git pull```
-4. ```apachectl restart```
+4. ```sudo apachectl restart```
