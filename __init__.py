@@ -36,8 +36,8 @@ app.jinja_env.filters["formatdate"] = format_date
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY")
-# keep sessions alive for 48 hours before requiring auth again
-app.config["PERMANENT_SESSION_LIFETIME"] = 172800
+# keep sessions alive for 2 hours before requiring auth again
+app.config["PERMANENT_SESSION_LIFETIME"] = 7200
 Session(app)
 
 
@@ -81,7 +81,7 @@ def login():
         resp = google.get("/oauth2/v1/userinfo")
         # make sure resp.ok exists, else show resp.text as error
         assert resp.ok, resp.text
-    except (InvalidGrantError, TokenExpiredError) as e: 
+    except: 
         return redirect(url_for("google.login"))
 
     # email address provided by google oauth
