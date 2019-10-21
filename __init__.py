@@ -47,7 +47,10 @@ def db_query(q, commit = False):
         host=os.environ.get("DB_IP"),
         user=os.environ.get("DB_USER"),
         passwd=os.environ.get("DB_PASSWORD"),
-        database=os.environ.get("DB")
+        database=os.environ.get("DB"),
+        ssl_ca=os.environ.get("SSL_CA"),
+        ssl_cert=os.environ.get("SSL_CERT"),
+        ssl_key=os.environ.get("SSL_KEY")
     )
     mycursor = mydb.cursor(dictionary=True)
 
