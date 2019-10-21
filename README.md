@@ -19,9 +19,11 @@ A Flask app that provides reporting to the DxE Finance team. Live at http://fina
     - ```DB``` database name to connect to
     - ```DB_USER``` database username
     - ```DB_PASSWORD``` database password
+    - Paths to ssl keys for mysql
 6. Run the app: ```flask run```
 
 ## Deploying changes
 1. SSH into ec2.dxe.io
 2. ```cd /var/www/FinanceReporting/FinanceReporting```
 3. ```git pull```
+4. ```sudo apachectl restart```
