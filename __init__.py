@@ -137,7 +137,6 @@ def donations():
 
             query = (" SELECT * FROM " +
                     " (SELECT amount, cretime as date, status, type, donorEmail, formName, donorName FROM funraise_donations_friends WHERE formName <> 'Facebook' " +
-                    " UNION ALL SELECT amount, cretime as date, status, type, donorEmail, formName, donorName FROM funraise_donations_arc WHERE formName <> 'Facebook' " +
                     " UNION ALL SELECT amount, cretime as date, IF(amount > 0, 'Complete', 'Refunded') as status, 'One Time' as type, donorEmail, concat('Facebook - ', page) as formName, name as donorName FROM `facebook_donations`) temp ")
 
             query += " WHERE donorName = '" + donorName + "'"
@@ -153,7 +152,6 @@ def donations():
         heading1 = "Recent donations"
 
         rows = db_query(("SELECT amount, cretime as date, status, type, donorEmail, formName, donorName FROM funraise_donations_friends WHERE donorName not like '%for good%' and formName <> 'Facebook' " +
-                        " UNION ALL SELECT amount, cretime as date, status, type, donorEmail, formName, donorName FROM funraise_donations_arc WHERE donorName not like '%for good%' and formName <> 'Facebook' " +
                         " UNION ALL SELECT amount, cretime as date, IF(amount > 0, 'Complete', 'Refunded') as status, 'One Time' as type, donorEmail, concat('Facebook - ', page) as formName, name as donorName FROM `facebook_donations` " +
                         " ORDER BY date desc LIMIT 500 "))
 
@@ -164,7 +162,6 @@ def donations():
 
         query = (" SELECT * FROM " +
                 " (SELECT amount, cretime as date, status, type, donorEmail, formName, donorName FROM funraise_donations_friends WHERE formName <> 'Facebook' " +
-                " UNION ALL SELECT amount, cretime as date, status, type, donorEmail, formName, donorName FROM funraise_donations_arc WHERE formName <> 'Facebook' " +
                 " UNION ALL SELECT amount, cretime as date, IF(amount > 0, 'Complete', 'Refunded') as status, 'One Time' as type, donorEmail, concat('Facebook - ', page) as formName, name as donorName FROM `facebook_donations`) temp ")
 
         donorName = sanitize(request.form.get("donorName"))
@@ -228,7 +225,7 @@ def donations():
 def donations_search():
 
     # get list of possible donation form names
-    donationForms = db_query("SELECT formName FROM funraise_donations_friends group by formName  UNION ALL  SELECT formName FROM funraise_donations_arc group by formName  UNION ALL  select 'Facebook - Friends of DxE'  UNION ALL  select 'Facebook - Direct Action Everywhere'")
+    donationForms = db_query("SELECT formName FROM funraise_donations_friends group by formName UNION ALL  select 'Facebook - Friends of DxE'  UNION ALL  select 'Facebook - Direct Action Everywhere'")
 
     return render_template("donations_search.html", donationForms=donationForms)
 
@@ -242,7 +239,6 @@ def donors():
         query = ("SELECT name, max(email) as email, max(phone) as phone, max(location) as location, max(photo) as photo, max(fb) as fb, if(max(status) <> '', 'RECURRING', max(type)) as type, if(group_concat(status) like '%active%', 'Active', max(status)) as status, max(lastDate) as lastDate, min(firstDate) as firstDate, sum(amount) as amount" +
                 " FROM (" +
                 "   SELECT name, max(email) as email, max(phone) as phone, max(concat(city, ' ', state)) as location, max(photoUrl) as photo, max(facebookUrl) as fb, if(recurringStatus <> '', 'RECURRING', max(donorType)) as type, if(group_concat(recurringStatus) like '%active%', 'Active', max(recurringStatus)) as status, lastDate, firstDate, amount FROM funraise_donors_friends left join (   SELECT max(cretime) as lastDate, min(cretime) as firstDate, donorName, sum(CASE WHEN status = 'Complete' AND formName <> 'Facebook' THEN amount ELSE 0 END) as amount    FROM `funraise_donations_friends`   group by donorName ) temp on temp.donorName = funraise_donors_friends.name WHERE donorType <> 'POTENTIAL' group by name" +
-                "   UNION ALL SELECT name, max(email) as email, max(phone) as phone, max(concat(city, ' ', state)) as location, max(photoUrl) as photo, max(facebookUrl) as fb, if(recurringStatus <> '', 'RECURRING', max(donorType)) as type, if(group_concat(recurringStatus) like '%active%', 'Active', max(recurringStatus)) as status, lastDate, firstDate, amount FROM funraise_donors_arc left join (   SELECT max(cretime) as lastDate, min(cretime) as firstDate, donorName, sum(CASE WHEN status = 'Complete' AND formName <> 'Facebook' THEN amount ELSE 0 END) as amount    FROM `funraise_donations_arc`   group by donorName ) temp on temp.donorName = funraise_donors_arc.name WHERE donorType <> 'POTENTIAL' group by name" +
                 "   UNION ALL SELECT name, max(donorEmail) as email, '' as phone, '' as location, '' as photo, '' as fb, if(count(amount) > 1 AND sum(amount) > 0, 'RETURNING', 'ONE_TIME') as type, '' as status, max(cretime) as lastDate, min(cretime) as firstDate, sum(amount) as amount  from facebook_donations  where name <> '' group by name" +
                 " ) temp" +
                 " group by name order by lastDate desc LIMIT 200 ")
@@ -260,7 +256,6 @@ def donors():
                 "  SELECT name, max(email) as email, max(phone) as phone, max(location) as location, max(photo) as photo, max(fb) as fb, if(max(status) <> '', 'RECURRING', max(type)) as type, if(group_concat(status) like '%active%', 'Active', max(status)) as status, max(lastDate) as lastDate, min(firstDate) as firstDate, sum(amount) as amount" +
                 "  FROM (" +
                 "     SELECT name, max(email) as email, max(phone) as phone, max(concat(city, ' ', state)) as location, max(photoUrl) as photo, max(facebookUrl) as fb, if(recurringStatus <> '', 'RECURRING', max(donorType)) as type, if(group_concat(recurringStatus) like '%active%', 'Active', max(recurringStatus)) as status, lastDate, firstDate, amount FROM funraise_donors_friends left join (   SELECT max(cretime) as lastDate, min(cretime) as firstDate, donorName, sum(CASE WHEN status = 'Complete' AND formName <> 'Facebook' THEN amount ELSE 0 END) as amount    FROM `funraise_donations_friends`   group by donorName ) temp on temp.donorName = funraise_donors_friends.name WHERE donorType <> 'POTENTIAL' group by name" +
-                "     UNION ALL SELECT name, max(email) as email, max(phone) as phone, max(concat(city, ' ', state)) as location, max(photoUrl) as photo, max(facebookUrl) as fb, if(recurringStatus <> '', 'RECURRING', max(donorType)) as type, if(group_concat(recurringStatus) like '%active%', 'Active', max(recurringStatus)) as status, lastDate, firstDate, amount FROM funraise_donors_arc left join (   SELECT max(cretime) as lastDate, min(cretime) as firstDate, donorName, sum(CASE WHEN status = 'Complete' AND formName <> 'Facebook' THEN amount ELSE 0 END) as amount    FROM `funraise_donations_arc`   group by donorName ) temp on temp.donorName = funraise_donors_arc.name WHERE donorType <> 'POTENTIAL' group by name" +
                 "     UNION ALL SELECT name, max(donorEmail) as email, '' as phone, '' as location, '' as photo, '' as fb, if(count(amount) > 1 AND sum(amount) > 0, 'RETURNING', 'ONE_TIME') as type, '' as status, max(cretime) as lastDate, min(cretime) as firstDate, sum(amount) as amount  from facebook_donations  where name <> ''  group by name" +
                 "   ) temp GROUP BY name ORDER BY lastDate desc" + 
                 ") temp2 ")
