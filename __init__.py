@@ -44,13 +44,13 @@ Session(app)
 def db_query(q, commit = False):
 
     mydb = mysql.connector.connect(
-        host=os.environ.get("DB_IP"),
         user=os.environ.get("DB_USER"),
         passwd=os.environ.get("DB_PASSWORD"),
         database=os.environ.get("DB"),
+        host=os.environ.get("DB_HOST"),
+        port=os.environ.get("DB_PORT"),
         ssl_ca=os.environ.get("SSL_CA"),
-        ssl_cert=os.environ.get("SSL_CERT"),
-        ssl_key=os.environ.get("SSL_KEY")
+        ssl_verify_cert=True
     )
     mycursor = mydb.cursor(dictionary=True)
 
